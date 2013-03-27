@@ -403,9 +403,41 @@ Really really ridiculously ***Relational***
         </section>
 
         <section class="white">
+          <img class="strip" style="floag: left; width: 88%; left: 10px" src="/images/normalization.png">
+          <img class="fragment fade-in strip" style="right: 35px" src="/images/splat.png">
+        </section>
 
-<img class="strip" style="floag: left; width: 88%; left: 10px" src="/images/normalization.png">
-<img class="fragment fade-in strip" style="right: 35px" src="/images/splat.png">
+      </section>
+
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+##So what is next?
+          </script>
+
+
+        </section>
+
+        <section class="white">
+          <img class="strip" src="/images/denormalization.png">
+          <aside class="notes">
+          <p>
+            Relational databases are great for data integrity, but joining many tables together will slow a query down. Drupal has every little field in it's own table, so any query is going to involve lots of joins. While RDBs have spent many years optimizing joins, you still can't beat the performance of pulling from a single table.
+          </p>
+
+          <p>
+            One way around this is to duplicate data into a denormalized data store, for example, MongoDB. (Or Riak, Hadoop, HBase, Cassandra, Hypertable, CouchDB) Mongo is a supplementary database and is used for very fast reads. The tradeoff is now you have introduced an element of uncertainty about the integrity of the data. **[ CAP theorem ]** If anything goes wrong in writing data to Mongo, then the two data sources will diverge. If you can tolerate eventual consistency, then this configuration is extremely fast.
+          </p>
+          </aside>
+        </section>
+      </section>
+
+      <section>
+
+        <section data-markdown>
+          <script type="text/template">
+###Case study - First Crush Tastings
+          </script>
 
           <aside class="notes">
 
@@ -413,16 +445,6 @@ Really really ridiculously ***Relational***
         </section>
 
       </section>
-
-        <section data-markdown>
-          <script type="text/template">
-
-          </script>
-
-          <aside class="notes">
-
-          </aside>
-        </section>
 </div>
 
     <script src="lib/js/head.min.js"></script>
