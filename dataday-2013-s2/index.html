@@ -200,17 +200,37 @@
 
         <section>
             <h2>Avoiding the Bootstrap</h2>
+
+            <aside class="notes">
+                Let us compound this problem by further stipulating that you will be integrating data from an external source (external API, feeds, etc.). Just to kick it up a notch, you also want to integrate real time data. There is no way you can feed real time data into the bootstrap.
+
+Unlike voting, bootstrapping should not be done early and often. Instead, bootstrap once to load the page and deliver a JS app that will request data from a light weight proxy to the de-normalized data store.
+            </aside>
         </section>
     </section>
     <section>
         <section>
             <h2>API and Node.JS</h2>
+
+            <aside class="notes">
+                Instead of asking Drupal to read data from a relational database, use the client web browser, the front end, to talk to a custom API. Ideally, this API is non-blocking, and asynchronous.
+
+                You write an API service that can talk to other services, i.e. a proxy. You can build the proxy in just about anything. The point is, it isn't processing data and it should be able to handle lots of connections. That way, your service acts as fast shuttle of data that bypasses Drupal's bootstrap.
+            </aside>
         </section>
         <section>
             <h2>CORS</h2>
+
+            <aside class="notes">
+                An API service is necessary because of the single origin policy. Requests for data sources have to originate from the same domain unless Cross Origin Resource Sharing (CORS) is implemented. The way to get around this is to write a server side application that fetches data from outside sources and then relays that data back to the requesting client side application.
+            </aside>
         </section>
         <section>
             <h2>RESTful</h2>
+
+            <aside class="notes">
+                Since you are building the API, you can make it any way you want, but following some good basic REST conventions is a good idea.
+            </aside>
         </section>
         <section>
             <h2>Code Samples</h2>
@@ -223,6 +243,14 @@
 
         <section>
             <h2>Organize your Code</h2>
+
+            <aside class="notes">
+                On the front-end, you could write everything as AJAX calls and jQuery DOM manipulation, but that will get messy very quickly as your application grows in sophistication.
+
+In the interests of maintainability and sanity, use a framework that organizes your code and abstracts away the DOM. There are many to choose from. A new one probably came out this morning.
+
+We use Ember because it is straightforward to use, powerful, flexible, and still fairly "light weight." BackBone has been around for a while and is quite nice, but we like how Ember handles garbage collection and the other goodies it ships with.
+            </aside>
         </section>
         <section>
             <h2>Ember</h2>
@@ -231,6 +259,10 @@
     <section>
         <section>
             <h2>Algebraix</h2>
+
+            <aside class="notes">
+                For Algebraix, all the data comes from an external source, so it makes sense to run the application on the client side, as opposed to importing the data into Drupal first. It also makes the control panel feel more responsive. No more click and hope while waiting for the interface to receive data. Now we've created a conversation with the user.
+            </aside>
         </section>
         <section>
             <h2>Code Samples</h2>
