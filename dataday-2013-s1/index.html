@@ -1,41 +1,57 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+    <title>reveal.js - The HTML Presentation Framework</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <style>
+      .white {
+        background: white;
+      }
+      section img.strip {
+        border: none;
+        background: none;
+        box-shadow: none;
+        position: relative;
+      }
+      section pre.code {
+        font-size: .45em;
+        width: 100%;
+        word-wrap: normal
+      }
+    </style>
+  </head>
 
-	<body>
+  <body>
 
-		<div class="reveal">
+    <div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
     <section>
         <h1>drupal as a data platform&nbsp;</h1>
         <h3>session 1</h3>
@@ -170,38 +186,299 @@
         </div>
         <div>When modularizing the architecture creates performant applications for all content and all users.</div>
     </section>
+
+        <section data-markdown>
+          <script type="text/template">
+#Optimizing Drupal
+###For "big data"
+<br>
+
+- cache
+- caching
+- **MOAR** caching!
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+![memcached](/images/memcached.gif)
+![redis](/images/redis.png)
+![varnish](/images/varnish.png)
+![apcphp](/images/apcphp.png)
+          </script>
+        </section>
+
+        <section class="white">
+          <img class="strip" style="left: 289px" src="/images/drupal/Drupal.png">
+          <img class="strip" style="bottom: 240px; right: 233px" src="/images/drupal/MySQL.png">
+          <img class="strip" style="bottom: 240px; right: 13px" src="/images/drupal/views.png">
+          <img class="strip fragment roll-in" style="left: 300px" src="/images/drupal/visitors-authors.png">
+          <img class="strip fragment roll-in" style="bottom: 50px; right: 20px" src="/images/drupal/miners.png">
+          <img class="strip fragment roll-in" style="right: 370px; bottom: 220px" src="/images/drupal/mongoDB.png">
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+## The Great Balancing Act
+###Challenges
+
+1. Data processing on the server
+
+2. Travel time/latency of the pipe
+
+3. Rendering the data on the client
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+###Case study - NRG
+![nrg](/images/nrg.png)
+          </script>
+          <aside class="notes">
+            <p>
+What is it? - A quote generator for leasing solar panels.<br>
+<br>
+What do users do? - Create hundreds of quotes a month and manage the state of those quotes (accepted, amended, alternate payment plans). Each quote contains many variables that concern solar power generation (pitch, azimuth, equipment type).<br>
+<br>
+What do the data miners want? - Business intelligence--correlation between estimated power production with equipment variables, location, etc. in order to improve estimates and to asses risk when focusing on new markets.<br>
+            </p>
+          </aside>
+        </section>
+
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+##The views tradeoff
+###IS
+##Maintainability vs Performance
+          </script>
+          <aside class="notes">
+            <p>
+              Originally, the reports were built with the views module, because the high level of abstraction allowed developers to quickly assemble all the variables together. It's a matter of click click click in the interface.
+            </p>
+
+            <p>
+              High level of abstractions are more maintainable, easier to implement, and cost less to build, which is why Views is a popular way to initially build reports.
+            </p>
+
+            <p>
+              The tradeoff is performance. Views has a lot of overhead because it is a complicated object system and the queries it produces are not optimized. Unfortunately for NRG, the reports took on the order of minutes to pull and required lots of memory.
+            </p>
+        </section>
+
+        <section class='white'>
+          <img class='strip' src="/images/normalization.png">
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+##Views query
+
+<pre class="code"><code>
+SELECT DISTINCT(node.nid) AS nid_2,
+  node.nid AS nid,
+  node_data_field_job_date.field_job_date_value AS node_data_field_job_date_field_job_date_value,
+  node_data_field_job_date.field_job_date_value2 AS node_data_field_job_date_field_job_date_value2,
+  node.type AS node_type, node.vid AS node_vid,
+  node_node_data_field_job_supplier_node_data_field_supplier_billing.field_supplier_billing_value AS node_node_data_field_job_supplier_node_data_field_supplier_b,
+  node_node_data_field_job_supplier.type AS node_node_data_field_job_supplier_type,
+  node_node_data_field_job_supplier.nid AS node_node_data_field_job_supplier_nid,
+  node_node_data_field_job_supplier.vid AS node_node_data_field_job_supplier_vid,
+  node_data_field_job_retailer.field_job_retailer_nid AS node_data_field_job_retailer_field_job_retailer_nid,
+  workflow_node.sid AS workflow_node_sid, node_data_field_job_date.field_job_agent_nid AS node_data_field_job_date_field_job_agent_nid,
+COUNT(node.nid) AS nid_1
+FROM node node
+  LEFT JOIN content_type_job node_data_field_job_retailer
+    ON node.vid = node_data_field_job_retailer.vid
+  LEFT JOIN node node_node_data_field_job_retailer
+    ON node_data_field_job_retailer.field_job_retailer_nid = node_node_data_field_job_retailer.nid
+  LEFT JOIN content_field_job_supplier node_data_field_job_supplier
+    ON node.vid = node_data_field_job_supplier.vid
+  LEFT JOIN node node_node_data_field_job_supplier
+    ON node_data_field_job_supplier.field_job_supplier_nid = node_node_data_field_job_supplier.nid
+  LEFT JOIN workflow_node workflow_node
+    ON node.nid = workflow_node.nid
+  LEFT JOIN content_type_job node_data_field_job_date
+    ON node.vid = node_data_field_job_date.vid
+  LEFT JOIN content_type_supplier_profile node_node_data_field_job_supplier_node_data_field_supplier_billing
+    ON node_node_data_field_job_supplier.vid = node_node_data_field_job_supplier_node_data_field_supplier_billing.vid
+WHERE (node.status = 1 OR
+  (node.uid = ***CURRENT_USER*** AND ***CURRENT_USER*** <> 0) OR
+  ***ADMINISTER_NODES*** = 1) AND (node.type in ('job')) AND
+  (workflow_node.sid = 2) AND (UPPER(node_node_data_field_job_retailer.title) LIKE UPPER('%%'))
+GROUP BY nid_2
+ORDER BY node_data_field_job_date_field_job_date_value ASC
+</code></pre>
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+###In other words...
+
+![ermahgerd](/images/ermahgerd.jpg)
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+##Query builder
+
+- Dynamic & extensible
+- Ties in directly with the theme layer
+- Abstracted from raw SQL
+- Optimized queries
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type='text/template'>
+##Query builder API
+
+<pre class="code"><code>
+// Create an object of type SelectQuery
+$query = db_select('node', 'n')->extend('PagerDefault')->extend('TableSort');
+
+// Add extra detail to this query object: a condition, fields and a range
+$query
+  ->condition('n.nid', 0, '<>')
+  ->fields('n', array('nid', 'name', 'status', 'created', 'access'))
+  ->range(0, 50);
+</code></pre>
+
+          </script>
+        </section>
+
+      </section>
+
+      <section>
+        <section class="white">
+          <img class="strip" src="/images/normalization.png">
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+##Static queries
+
+  - Most performant
+  - Lowest Level
+  - Hardest to Maintain
+
+<br>
+
+###You could end up here...
+(show if blocks and raw sql)
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+Drupal is
+
+![stiller](/images/zoolander.jpg)
+
+Really really ridiculously ***Relational***
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+![schema](/images/schema.png)
+          </script>
+
+          <aside class="notes">
+            <p>This is why static queries are hard to maintain</p>
+          </aside>
+        </section>
+
+        <section class="white">
+          <img class="strip" style="floag: left; width: 88%; left: 10px" src="/images/normalization.png">
+          <img class="fragment fade-in strip" style="right: 35px" src="/images/splat.png">
+        </section>
+
+      </section>
+
+      <section>
+        <section data-markdown>
+          <script type="text/template">
+##So what is next?
+          </script>
+
+
+        </section>
+
+        <section class="white">
+          <img class="strip" src="/images/denormalization.png">
+          <aside class="notes">
+          <p>
+            Relational databases are great for data integrity, but joining many tables together will slow a query down. Drupal has every little field in it's own table, so any query is going to involve lots of joins. While RDBs have spent many years optimizing joins, you still can't beat the performance of pulling from a single table.
+          </p>
+
+          <p>
+            One way around this is to duplicate data into a denormalized data store, for example, MongoDB. (Or Riak, Hadoop, HBase, Cassandra, Hypertable, CouchDB) Mongo is a supplementary database and is used for very fast reads. The tradeoff is now you have introduced an element of uncertainty about the integrity of the data. **[ CAP theorem ]** If anything goes wrong in writing data to Mongo, then the two data sources will diverge. If you can tolerate eventual consistency, then this configuration is extremely fast.
+          </p>
+          </aside>
+        </section>
+      </section>
+
+      <section>
+
+        <section data-markdown>
+          <script type="text/template">
+###Case study - First Crush Tastings
+
+![firstcrush](/images/firstcrush.png)
+          </script>
+
+          <aside class="notes">
+            <p>
+              What is it?A scheduling coordinator for beverage tastings.
+            </p>
+
+            <p>
+              What do users do? Create jobs, apply for jobs, create feedback on jobs.
+            </p>
+
+            <p>
+              What do the data miners want? The clients of First Crush are beverage suppliers. They want to see all sales metrics by brand, product, market, store, and date.
+            </p>
+          </aside>
+        </section>
+
+      </section>
 </div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
 
-		<script>
+    <script>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
 
-		</script>
+    </script>
 
-	</body>
+  </body>
 </html>
