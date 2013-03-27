@@ -196,6 +196,7 @@
         </section>
         <section>
             <h2>Massive Callstacks</h2>
+            <img src="images/error stack trace.png">
         </section>
 
         <section>
@@ -240,7 +241,35 @@
             </aside>
         </section>
         <section>
-            <h2>Code Samples</h2>
+            <h2>Connect to MongoDB</h2>
+            <pre><code>
+mongoose.connect('mongodb://localhost/algebraix');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function() {
+
+  var Schema = mongoose.Schema({
+    someField: String,
+    anotherField: Number,
+  });
+
+  app.Resource = mongoose.model('Resource', Schema);
+
+});
+            </code>
+            </pre>
+        </section>
+        <section>
+            <h2>Add a route</h2>
+            <pre><code>
+app.get('/resources', function(req, res) {
+    app.Resource.find(function(err, resources) {
+        res.send(resources);
+    });
+});
+            </code>
+            </pre>
         </section>
     </section>
     <section>
