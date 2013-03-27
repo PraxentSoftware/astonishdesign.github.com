@@ -183,8 +183,12 @@
     <section>
         <section>
             <h2>The cost of bootstrap</h2>
-            <br>
-            The larger the application, the more modules in use. The more modules in use, the more costly the bootstrap.
+            <img src="images/grappling_hook.jpg" width="33%" style="float: left">
+            <ul style="float:right; width: 60%">
+                <li>Hooks allow modules to customize behavior</li>
+                <li>Drupal calls hooks during each stage of bootstrap</li>
+                <li>More modules, more hooks, slower bootstrap</li>
+            </ul>
 
             <aside class="notes">
                 One of Drupal's primary strengths is also a weaknesses: a dynamic call stack. Drupal relies on hooks to run custom code that can be included in community contributed modules. This is why Drupal is a rapid development platform; It is composed of modular, reusable components. However, this architecture is also inefficient, and tends to generate <strong>massive call stacks</strong>.
@@ -197,39 +201,42 @@
         <section>
             <h2>Bootstrap on Every Request</h2>
         </section>
-
-        <section>
-            <h2>Avoiding the Bootstrap</h2>
-
-            <aside class="notes">
-                Let us compound this problem by further stipulating that you will be integrating data from an external source (external API, feeds, etc.). Just to kick it up a notch, you also want to integrate real time data. There is no way you can feed real time data into the bootstrap.
-
-Unlike voting, bootstrapping should not be done early and often. Instead, bootstrap once to load the page and deliver a JS app that will request data from a light weight proxy to the de-normalized data store.
-            </aside>
-        </section>
     </section>
     <section>
         <section>
-            <h2>API and Node.JS</h2>
+            <h2>Avoiding the Bootstrap</h2>
+            <img src="images/Data Day.004.png">
 
             <aside class="notes">
-                Instead of asking Drupal to read data from a relational database, use the client web browser, the front end, to talk to a custom API. Ideally, this API is non-blocking, and asynchronous.
+               <p>Let us compound this problem by further stipulating that you will be integrating data from an external source (external API, feeds, etc.). Just to kick it up a notch, you also want to integrate real time data. There is no way you can feed real time data into the bootstrap.</p>
 
-                You write an API service that can talk to other services, i.e. a proxy. You can build the proxy in just about anything. The point is, it isn't processing data and it should be able to handle lots of connections. That way, your service acts as fast shuttle of data that bypasses Drupal's bootstrap.
+                <p>bootstrap once to load the page and deliver a JS app that will request data from a light weight proxy to the de-normalized data store.</p>
+            </aside>
+        </section>
+        <section>
+            <h2>API and Node.JS</h2>
+            <img src="images/node.png">
+
+            <aside class="notes">
+                <p>Instead of asking Drupal to read data from a relational database, use the client web browser, the front end, to talk to a custom API. Ideally, this API is non-blocking, and asynchronous.</p>
+
+                <p>You write an API service that can talk to other services, i.e. a proxy. You can build the proxy in just about anything. The point is, it isn't processing data and it should be able to handle lots of connections. That way, your service acts as fast shuttle of data that bypasses Drupal's bootstrap.</p>
             </aside>
         </section>
         <section>
             <h2>CORS</h2>
+            <img src="images/servers-all.png" height="500">
 
             <aside class="notes">
-                An API service is necessary because of the single origin policy. Requests for data sources have to originate from the same domain unless Cross Origin Resource Sharing (CORS) is implemented. The way to get around this is to write a server side application that fetches data from outside sources and then relays that data back to the requesting client side application.
+               <p>An API service is necessary because of the single origin policy. Requests for data sources have to originate from the same domain unless Cross Origin Resource Sharing (CORS) is implemented. The way to get around this is to write a server side application that fetches data from outside sources and then relays that data back to the requesting client side application.</p>
             </aside>
         </section>
         <section>
             <h2>RESTful</h2>
 
             <aside class="notes">
-                Since you are building the API, you can make it any way you want, but following some good basic REST conventions is a good idea.
+                <p>Since you are building the API, you can make it any way you want, but following some good basic REST conventions is a good idea.</p>
+                <p>It will make it easier to integrate with front end frameworks.</p>
             </aside>
         </section>
         <section>
@@ -239,29 +246,36 @@ Unlike voting, bootstrapping should not be done early and often. Instead, bootst
     <section>
         <section>
             <h2>On the front-end</h2>
+            <img src="images/Data Day.004.png">
+
         </section>
 
         <section>
             <h2>Organize your Code</h2>
+            <img src="images/pasta.jpg" height="400">
 
             <aside class="notes">
-                On the front-end, you could write everything as AJAX calls and jQuery DOM manipulation, but that will get messy very quickly as your application grows in sophistication.
+                <p>On the front-end, you could write everything as AJAX calls and jQuery DOM manipulation, but that will get messy very quickly as your application grows in sophistication.</p>
 
-In the interests of maintainability and sanity, use a framework that organizes your code and abstracts away the DOM. There are many to choose from. A new one probably came out this morning.
-
-We use Ember because it is straightforward to use, powerful, flexible, and still fairly "light weight." BackBone has been around for a while and is quite nice, but we like how Ember handles garbage collection and the other goodies it ships with.
+                <p>In the interests of maintainability and sanity, use a framework that organizes your code and abstracts away the DOM. There are many to choose from. A new one probably came out this morning.</p>
             </aside>
         </section>
         <section>
             <h2>Ember</h2>
+            <img src="images/ember.jpg">
+
+            <aside class="notes">
+                <p>We use Ember because it is straightforward to use, powerful, flexible, and still fairly light weight. BackBone has been around for a while and is quite nice, but we like how Ember handles garbage collection and the other goodies it ships with.</p>
+            </aside>
         </section>
     </section>
     <section>
         <section>
             <h2>Algebraix</h2>
+            <img src="images/Data Day.009.png">
 
             <aside class="notes">
-                For Algebraix, all the data comes from an external source, so it makes sense to run the application on the client side, as opposed to importing the data into Drupal first. It also makes the control panel feel more responsive. No more click and hope while waiting for the interface to receive data. Now we've created a conversation with the user.
+                <p>For Algebraix, all the data comes from an external source, so it makes sense to run the application on the client side, as opposed to importing the data into Drupal first. It also makes the control panel feel more responsive. No more click and hope while waiting for the interface to receive data. Now we've created a conversation with the user.</p>
             </aside>
         </section>
         <section>
