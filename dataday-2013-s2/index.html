@@ -214,6 +214,8 @@
                 <p>bootstrap once to load the page and deliver a JS app that will request data from a light weight proxy to the de-normalized data store.</p>
             </aside>
         </section>
+    </section>
+    <section>
         <section>
             <h2>API and Node.JS</h2>
             <img src="images/node.png">
@@ -233,7 +235,16 @@
             </aside>
         </section>
         <section>
+            <h2>Pick a Framework</h2>
+            <ul>
+                <li><a href="http://expressjs.com/">Express</a></li>
+                <li><a href="http://mcavage.github.com/node-restify/">Restify</a></li>
+            </ul>
+        </section>
+        <section>
             <h2>RESTful</h2>
+            <img src="images/rest.jpg">
+            <a href="http://apigee.com/about/api-best-practices" style="display: block; clear: left">Example API Best Practices</a>
 
             <aside class="notes">
                 <p>Since you are building the API, you can make it any way you want, but following some good basic REST conventions is a good idea.</p>
@@ -242,6 +253,18 @@
         </section>
         <section>
             <h2>Connect to MongoDB</h2>
+            <div style="width: 260; float: left">
+                <img src="images/mongoose.jpg" >
+                <img src="images/mongol.jpg" width="250">
+            </div>
+            <ul>
+                <li><a href="http://mongoosejs.com/">Mongoose</a></li>
+                <li><a href="https://github.com/masylum/mongolia">Mongolia</a></li>
+                <li><a href="https://github.com/kissjs/node-mongoskin">Mongoskin</a></li>
+                <li><a href="https://github.com/mongodb/node-mongodb-native">Native MongoDB Driver</a></li>
+            </ul>
+        </section>
+        <section>
             <pre><code>
 mongoose.connect('mongodb://localhost/algebraix');
 var db = mongoose.connection;
@@ -280,6 +303,18 @@ app.get('/resources', function(req, res) {
         </section>
 
         <section>
+            <h2>Isn't JS slow?</h2>
+            <img src="images/confused.jpg">
+
+            <aside class="notes">
+                <p>Yes but...</p>
+                <ul>
+                    <li>JS and devices continue to improve</li>
+                    <li>We've improved the overall round trip: faster data, smaller payload, no bootstrap. It's still faster overall.</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
             <h2>Organize your Code</h2>
             <img src="images/pasta.jpg" height="400">
             <a href="http://eviltrout.com/2013/02/10/why-discourse-uses-emberjs.html">Why Discourse Uses Ember</a>
@@ -290,6 +325,7 @@ app.get('/resources', function(req, res) {
                 <p>In the interests of maintainability and sanity, use a framework that organizes your code and abstracts away the DOM. There are many to choose from. A new one probably came out this morning.</p>
             </aside>
         </section>
+
         <section>
             <h2>Ember</h2>
             <img src="images/ember.jpg">
@@ -297,6 +333,30 @@ app.get('/resources', function(req, res) {
             <aside class="notes">
                 <p>We use Ember because it is straightforward to use, powerful, flexible, and still fairly light weight. BackBone has been around for a while and is quite nice, but we like how Ember handles garbage collection and the other goodies it ships with.</p>
             </aside>
+        </section>
+        <section>
+            <h2>MVC</h2>
+        </section>
+        <section>
+            <h2>Routing</h2>
+            <pre><code>
+var Router = Ember.Router.extend();
+
+  Router.map(function() {
+    this.resource('sites', function() {
+      this.route('new');
+      this.resource('site', { path: ':site_id' }, function() {
+        this.route('upgrade');
+        this.route('billing');
+      });
+    });
+
+  });
+            </code>
+            </pre>
+        </section>
+        <section>
+            <h2>Computed Properties</h2>
         </section>
     </section>
     <section>
@@ -307,6 +367,9 @@ app.get('/resources', function(req, res) {
             <aside class="notes">
                 <p>For Algebraix, all the data comes from an external source, so it makes sense to run the application on the client side, as opposed to importing the data into Drupal first. It also makes the control panel feel more responsive. No more click and hope while waiting for the interface to receive data. Now we've created a conversation with the user.</p>
             </aside>
+        </section>
+        <section>
+            <h2>Screen Shots</h2>
         </section>
         <section>
             <h2>Code Samples</h2>
